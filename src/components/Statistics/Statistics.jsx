@@ -1,24 +1,16 @@
-import styles from './Statistics.module.css';
-import PropTypes from 'prop-types';
-
-const color = item => {
-  const colorArray = ['#E74C3C', '#8E44AD', '#3498DB', '#27AE60', '#F39C12'];
-  return `${colorArray[Number(item.id.replace(/[^0-9]/g, '')) % 5]}`;
-};
+import React from "react";
+import PropTypes from "prop-types";
+import styles from "./StatisticsStyles.module.css";
 
 const Statistics = ({ title, stats }) => {
   return (
     <section className={styles.statistics}>
-      <h2 className={styles.title}>{title}</h2>
-      <ul className={styles.statList}>
-        {stats.map(item => (
-          <li
-            key={item.id}
-            className={styles.item}
-            style={{ backgroundColor: color(item) }}
-          >
-            <span className={styles.label}>{item.label}</span>
-            <span className={styles.percentage}>{item.percentage}%</span>
+      {title && <h2 className={styles.title}>{title}</h2>}
+      <ul className={styles.list}>
+        {stats.map(({ id, label, percentage }) => (
+          <li className={styles.item} key={id}>
+            <span className={styles.label}>{label}</span>
+            <span className={styles.percentage}>{percentage}%</span>
           </li>
         ))}
       </ul>
@@ -28,14 +20,13 @@ const Statistics = ({ title, stats }) => {
 
 Statistics.propTypes = {
   title: PropTypes.string,
-  id: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  percentage: PropTypes.number.isRequired,
-};
-
-Statistics.defaultProps = {
-  title: '',
-  label: 'format',
+  statistics: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      lable: PropTypes.string.isRequired,
+      percentage: PropTypes.number.isRequired,
+    })
+  ),
 };
 
 export default Statistics;

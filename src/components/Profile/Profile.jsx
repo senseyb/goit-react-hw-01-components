@@ -1,5 +1,6 @@
-import styles from './Profile.module.css';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
+import styles from "./ProfileStyles.module.css";
 
 const Profile = ({ name, tag, location, avatar, stats }) => {
   return (
@@ -7,19 +8,20 @@ const Profile = ({ name, tag, location, avatar, stats }) => {
       <div className={styles.description}>
         <img src={avatar} alt="Аватар пользователя" className={styles.avatar} />
         <p className={styles.name}>{name}</p>
-        <p className={styles.tag}>@{tag}</p>
+        <p className={styles.tag}>{tag}</p>
         <p className={styles.location}>{location}</p>
       </div>
+
       <ul className={styles.stats}>
-        <li>
+        <li className={styles.item}>
           <span className={styles.label}>Followers</span>
           <span className={styles.quantity}>{stats.followers}</span>
         </li>
-        <li>
+        <li className={styles.item}>
           <span className={styles.label}>Views</span>
           <span className={styles.quantity}>{stats.views}</span>
         </li>
-        <li>
+        <li className={styles.item}>
           <span className={styles.label}>Likes</span>
           <span className={styles.quantity}>{stats.likes}</span>
         </li>
@@ -28,24 +30,17 @@ const Profile = ({ name, tag, location, avatar, stats }) => {
   );
 };
 
-Profile.propTypes = {
-  name: PropTypes.string.isRequired,
-  tag: PropTypes.string.isRequired,
-  location: PropTypes.string.isRequired,
-  avatar: PropTypes.string.isRequired,
-  stats: PropTypes.object.isRequired,
+Profile.defaultProps = {
+  avatar:
+    "https://dummyimage.com/640x480/2a2a2a/ffffff&text=Product+image+placeholder",
 };
 
-Profile.defaultProps = {
-  name: 'User name',
-  tag: '@User tag',
-  location: 'User location',
-  avatar: 'https://www.flaticon.com/svg/static/icons/svg/3784/3784184.svg',
-  stats: {
-    followers: '0',
-    views: '0',
-    likes: '0',
-  },
+Profile.propTypes = {
+  name: PropTypes.string.isRequired,
+  avatar: PropTypes.string,
+  location: PropTypes.string.isRequired,
+  tag: PropTypes.string.isRequired,
+  stats: PropTypes.objectOf(PropTypes.number),
 };
 
 export default Profile;
